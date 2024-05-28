@@ -27,13 +27,13 @@
     <ClInclude Include="src\lib\usuario.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="cadastro.hpp">
+    <ClInclude Include="src\lib\cadastro.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="login.hpp">
+    <ClInclude Include="src\lib\inicialisarSistema.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="inicialisarSistema.hpp">
+    <ClInclude Include="src\lib\login.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

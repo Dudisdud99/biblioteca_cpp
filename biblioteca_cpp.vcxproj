@@ -19,12 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cadastro.hpp" />
-    <ClInclude Include="inicialisarSistema.hpp" />
-    <ClInclude Include="login.hpp" />
     <ClInclude Include="src\lib\adm.hpp" />
+    <ClInclude Include="src\lib\cadastro.hpp" />
     <ClInclude Include="src\lib\emprestimo.hpp" />
+    <ClInclude Include="src\lib\inicialisarSistema.hpp" />
     <ClInclude Include="src\lib\livro.hpp" />
+    <ClInclude Include="src\lib\login.hpp" />
     <ClInclude Include="src\lib\usuario.hpp" />
   </ItemGroup>
   <ItemGroup>
