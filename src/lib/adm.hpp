@@ -153,12 +153,12 @@ class Adm : public Usuario{
                 std::cout << "\nDigite o ID do usuário: ";
                 std::cin >> id;
 
-                std::string opcao;
+                int opcao;
 
-                std::cout << "\nE um adm (s/n): ";
+                std::cout << "\nE um adm (1 - sim, 2 - nao): ";
                 std::cin >> opcao;
 
-                if(opcao == "n"){
+                if(opcao == 1){
                     for (Usuario* usuario : usuarios) {
                         if (usuario->getId() == id-1) {
                             std::cout << "\nUsuário encontrado\n";
@@ -169,7 +169,7 @@ class Adm : public Usuario{
                         }
                     }
                 }
-                else if(opcao == "s"){
+                else if(opcao == 2){
                     for (Adm* adm : adms) {
                         if (adm->getId() == id-1) {
                             std::cout << "\nUsuário encontrado\n";
