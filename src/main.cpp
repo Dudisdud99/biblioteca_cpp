@@ -52,9 +52,9 @@ int main() {
     livros.clear();
 
     for (Adm* adm : adms) {
-    delete adm;
-}
-adms.clear();
+        delete adm;
+    }
+    adms.clear();
 
     return 0;
 }

@@ -4,9 +4,10 @@
 #include <string>
 #include <vector>
 #include "usuario.hpp"
+#include "livro.hpp"
 #include "adm.hpp"
 
-void login(std::vector<Usuario*>& usuarios, std::vector<Livro*>& livros, std::vector<Adm*>& adms, int idUsuario, std::string senhaAdm) {
+void login(std::vector<Usuario*>& usuarios, std::vector<Livro*>& livros, std::vector<Adm*>& adms, int& idUsuario, std::string senhaAdm) {
     std::string login, senha;
 
     while (true) {

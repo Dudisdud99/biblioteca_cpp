@@ -36,7 +36,7 @@ class Emprestimo {
         }
 
         float calcMulta(){
-            float multa =0;
+            float multa = 0;
             int diferencaHoras = 0;
             std::chrono::time_point<std::chrono::system_clock> agora = std::chrono::system_clock::now();
             if(agora > dataDevolucao){

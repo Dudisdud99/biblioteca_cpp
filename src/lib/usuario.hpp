@@ -13,6 +13,7 @@ class Usuario {
             senha = _senha;
             id = _id;
             multa = 0;
+            status = true;
         };
         
         ~Usuario(){

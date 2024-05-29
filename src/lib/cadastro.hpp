@@ -5,24 +5,26 @@
 #include <vector>
 #include "usuario.hpp"
 #include "adm.hpp"
+#include "livro.hpp"
+#include "login.hpp"
 
-void cadastro(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, int& idUsuario, std::string senhaAdm) {
-    std::string login, senha;
+void cadastro(std::vector<Usuario*>& usuarios, std::vector<Livro*>& livros, std::vector<Adm*>& adms, int& idUsuario, std::string senhaAdm) {
+    std::string nomeUsuario, senha;
     while (true) {
         std::cout << "\nDigite o nome de usuario: ";
-        std::cin >> login;
+        std::cin >> nomeUsuario;
 
         bool existeUser = false;
 
         for (Usuario* usuario : usuarios) {
-            if (usuario->getLogin() == login) {
+            if (usuario->getLogin() == nomeUsuario) {
                 existeUser = true;
                 break;
             }
         }
         if (existeUser == false) {
             for (Adm* adm : adms) {
-                if (adm->getLogin() == login) {
+                if (adm->getLogin() == nomeUsuario) {
                     existeUser = true;
                     break;
                 }
@@ -35,7 +37,6 @@ void cadastro(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, int& idU
             break;
         }
     }
-
 
     while (true) {
         std::cout << "\nDigite a senha: ";
@@ -54,108 +55,43 @@ void cadastro(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, int& idU
         int opcao;
 		std::cin >> opcao;
 		if(opcao == 1){
-            std::string codigo;
-            std::cout << "Digite o codigo de verificacao: ";
-            std::cin >> codigo;
-			Adm* adm = new Adm(login, senha, idUsuario);
-			adms.push_back(adm);
-			std::cout << "\nAdministrador adicionado: \n";
-			break;
+            bool existeAdm = false;
+
+            for (int i=0; i < 5; i += 1) {
+                std::string codigo;
+                std::cout << "Digite o codigo de verificacao: ";
+                std::cin >> codigo;
+                if (codigo == senhaAdm){
+                    Adm* adm = new Adm(nomeUsuario, senha, idUsuario);
+                    adms.push_back(adm);
+                    std::cout << "\nAdministrador cadastrado com sucesso!!!\n";
+                    existeAdm = true;
+                    break;
+                }
+				else {
+					std::cout << "\nCodigo invalido\n";
+				}
+            }
+            if (existeAdm) {
+                break;
+            }
+            else {
+                opcao = 2;
+            }
+
 		}
 		else if(opcao == 2){
-			Usuario* usuario = new Usuario(login, senha, idUsuario);
+			Usuario* usuario = new Usuario(nomeUsuario, senha, idUsuario);
 			usuarios.push_back(usuario);
-			std::cout << "\nUsuario adicionado: \n";
+			std::cout << "\nUsuario cadastrado com sucesso!!!\n";
 			break;
 		}
         else {
             std::cout << "\nOpcao invalida\n";
         }
+    }
+	idUsuario += 1;
+
+    login(usuarios, livros, adms, idUsuario, senhaAdm);
 }
-
-//bool cadastroAdm(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, int& idUsuario, std::string senhaAdm) {
-//    std::string login, senha;
-//    while (true) {
-//        std::cout << "\nDigite o nome de usuario: ";
-//        std::cin >> login;
-//
-//        bool existeUser = false;
-//
-//        for (Usuario* usuario : usuarios) {
-//            if (usuario->getLogin() == login) {
-//                existeUser = true;
-//                break;
-//            }
-//        }
-//
-//        if (existeUser == false) {
-//            for (Adm* adm : adms) {
-//                if (adm->getLogin() == login) {
-//                    existeUser = true;
-//                    break;
-//                }
-//            }
-//        }
-//        if (existeUser) {
-//            std::cout << "\nUsuario ja existe\n";
-//        }
-//        else {
-//            break;
-//        }
-//    }
-//
-//    int invalida = 0;
-//    bool boa = true;
-//
-//    while (invalida < 5) {
-//        std::cout << "Digite a senha: ";
-//        std::cin >> senha;
-//
-//
-//        if (senha == senhaAdm) {
-//            break;
-//        }
-//        else {
-//            std::cout << "\nSenha invalida\n";
-//            invalida += 1;
-//        }
-//        if (invalida == 5) {
-//            std::cout << "\nNamero maximo de tentativas excedido\n";
-//            boa = false;
-//            return boa;
-//        }
-//    }
-//
-//    Adm* adm = new Adm(login, senha, idUsuario);
-//    adms.push_back(adm);
-//    std::cout << "\nAdministrador adicionado: \n";
-//
-//    idUsuario += 1;
-//
-//    return boa;
-//}
-
-//void cadastro(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, int& idUsuario, std::string senhaAdm) {
-//    char opcao;
-//
-//    bool boa;
-//    while (true) {
-//        std::cout << "\nVc deseja cadastrar um usuario ou um administrador? (u/a): ";
-//        std::cin >> opcao;
-//
-//        if (opcao == 'u') {
-//            cadastroUsuario(usuarios, adms, idUsuario, senhaAdm);
-//            break;
-//        }
-//        else if (opcao == 'a') {
-//            boa = cadastroAdm(usuarios, adms, idUsuario, senhaAdm);
-//            if (boa) {
-//                break;
-//            }
-//        }
-//        else {
-//            std::cout << "\nOpção invalida\n";
-//        }
-//    }
-//}
 #endif
