@@ -7,18 +7,24 @@
 
 class Adm : public Usuario{
     public:
-        Adm(std::string _login, std::string _senha, int _id) : Usuario(_login, _senha, _id) {
+        Adm(std::string _login, std::string _senha, int _id, int _tipo) : Usuario(_login, _senha, _id, _tipo) {
         };
         ~Adm(){};
+
+        bool operator==(Adm& other) {
+            return (this->getLogin() == other.getLogin() && this->getSenha() == other.getSenha());
+        }
 
         int opcoesUsuario(std::vector<Livro*>& livros, std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, int idUsuario, std::string senhaAdm) {
             int opcao;
 
             while (true){
-                std::cout << "\n1 - Emprestar livro\n2 - Devolver livro\n3 - Pagar multa\n4 - Exibir dados\n5 - Exibir usuarios\n0 - Sair\nSua opção: ";
+                std::cout << "\n1 - Emprestar livro\n2 - Devolver livro\n3 - Pagar multa\n4 - Exibir dados\n5 - Exibir usuarios\n6 - Exibir livros\n0 - Sair\nSua opcao: ";
                 std::cin >> opcao;
 
-                if (opcao == 1) {
+                if (opcao == 0) {
+                    break;
+                } else if (opcao == 1) {
                     emprestarLivro(livros);
                 } else if (opcao == 2) {
                     devolverLivro(livros);
@@ -27,27 +33,40 @@ class Adm : public Usuario{
                 } else if(opcao == 4) {
                     exibirDados(livros);
                 } else if(opcao == 5) {
-                    exibirUsuarios(usuarios, adms);
+                    exibirUsuarios(usuarios, adms, livros);
                     opcoesAdm(usuarios, adms, idUsuario, senhaAdm, livros);
                 } else if(opcao == 6){
-                    // exibirLivros();                   
-                } else if (opcao == 0) {
-                    break;
+                    exibirLivros(livros); 
+                    opcoesLivro(livros);
+
                 } else {
-                    std::cout << "\nOpção inválida\n";
+                    std::cout << "\nOpção invalida\n";
                 }
             }
             return 0;
         }
 
-        void exibirUsuarios(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms){
+        void exibirUsuarios(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, std::vector<Livro*>& livros){
             std::cout << "\nUsuários:\n";
             for(Usuario* usuario : usuarios){
                 std::cout << "Usuário: " << usuario->getLogin() << " , ID: " << usuario->getId()+1 << " , multa: " << usuario->getMulta() << std::endl;
             }
+
+            bool found = false;
+            int thisId = this->getId();
             std::cout << "\nAdministradores:\n";
             for(Adm* adm : adms){
-                std::cout << "Adm: " << adm->getLogin() << " , ID: " << adm->getId()+1 << " , multa: " << adm->getMulta() << std::endl;
+                if (!found) {
+                    if (adm->getId() == thisId) {
+                        found = true;
+                    }
+                    else {
+						adm->exibirDados(livros);
+					}
+                }
+                else{
+                    adm->exibirDados(livros);
+                }           
             }
         }
 
@@ -62,7 +81,7 @@ class Adm : public Usuario{
                 } else if (opcao == 1){
                     verificarUser(usuarios, adms, livros);
                 } else if (opcao == 2){
-                    addUser(usuarios, adms, idUsuari, senhaAdm);
+                    addUser(usuarios, livros, adms, idUsuari, senhaAdm);
                 } else {
                     std::cout << "\nOpção inválida\n";
                 }
@@ -75,19 +94,17 @@ class Adm : public Usuario{
             while(true){
                 std::cout << "\nDigite o ID do user que deseja excluir: ";
                 std::cin >> id;
-                for(int i = 0; i < usuarios.size(); i++){
-                    if(usuarios[i]->getId() == id-1){
-                        found = true;
-                        usuarios[i]->~Usuario();
-                        break;
-                    }
+                for (Usuario* usuario : usuarios) {
+                    if(usuario->getId() == id-1){
+						found = true;
+                        usuario->autoDeletar(usuarios);
+					}
                 }
                 if(found == false){
-                    for(int i = 0; i < adms.size(); i++){
-                        if(adms[i]->getId() == id-1){
+                    for (Adm* adm : adms) {
+                        if (adm->getId() == id - 1) {
                             found = true;
-                            adms[i]->~Adm();
-                            break;
+                            adm->autoDeletar(adms);
                         }
                     }
                 }
@@ -100,49 +117,72 @@ class Adm : public Usuario{
             }
         }
 
-        void addUser(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, int idUsuario, std::string senhaAdm){
-            std::string login, senha;
-
-            while (true) {
-                std::cout << "\nDigite o nome de usuário: ";
-                std::cin >> login;
-
-                bool existeUser = false;
-
-                for (Usuario* usuario : usuarios) {
-                    if (usuario->getLogin() == login) {
-                        existeUser = true;
-                        break;
-                    }
+        void autoDeletar(std::vector<Adm*>& adms) {
+            for (auto it = adms.begin(); it != adms.end(); ) {
+                if (*it == this) {
+                    it = adms.erase(it);
+                    delete this;
+                    break;
                 }
-
-                if(existeUser == false){
-                    for (Adm* adm : adms) {
-                        if (adm->getLogin() == login) {
-                            break;
-                        }
-                    }
-                }
-                else{
-                    std::cout << "\nUsuário já existe\n";
+                else {
+                    ++it;
                 }
             }
+        }
 
-            std::cout << "Digite a senha: ";
-            std::cin >> senha;
+        void addUser(std::vector<Usuario*>& usuarios, std::vector<Livro*>& livros, std::vector<Adm*>& adms, int idUsuario, std::string senhaAdm){
+            //cadastro(usuarios, livros, adms, idUsuario, senhaAdm);
+        }
 
-            if(senha==senhaAdm){
-                Adm* adm = new Adm(login, senha, idUsuario);
-                adms.push_back(adm);
-                std::cout << "\nAdiminstrador adicionado: \n";
+        void addLivro(std::vector<Livro*>& livros){
+			//livros.push_back(new Livro());
+		}
+
+        void exibirLivros(std::vector<Livro*>& livros) {
+            std::cout << "\nLivros:\n";
+            for (Livro* livro : livros) {
+                if (livro->getStatus()) {
+					std::cout << "Livro: " << livro->getTitulo() << ", ID: " << livro->getId()+1 << ", Autor: " << livro->getAutor() << ", Ano: " << livro->getAno() << std::endl;
+				}
             }
-            else{
-                Usuario* usuario = new Usuario(login, senha, idUsuario);
-                usuarios.push_back(usuario);
-                std::cout << "\nUsuário adicionado: \n";
-            }
+        }
 
-            idUsuario+=1;
+        void opcoesLivro(std::vector<Livro*>& livros){
+			int opcao;
+			while(true){
+				std::cout << "\n1 - Adicionar livro\n2 - Remover livro\n0 - Sair\nSua opção: ";
+				std::cin >> opcao;
+
+				if(opcao == 0){
+					break;
+				} else if(opcao == 1){
+					addLivro(livros);
+                }
+                else if (opcao == 2){
+                    removerLivro(livros);
+                }
+                else {
+					std::cout << "\nOpção inválida\n";
+				}
+			}
+		}
+
+        void removerLivro(std::vector<Livro*>& livros) {
+            std::cout << "\nDigite o ID do livro que deseja remover: ";
+            int id;
+            std::cin >> id;
+
+            for (auto it = livros.begin(); it != livros.end(); ) {
+				if ((*it)->getId() == id-1) {
+					delete* it;
+					*it = nullptr;
+					it = livros.erase(it);
+					break;
+				}
+				else {
+					++it;
+				}
+			}
         }
 
         void verificarUser(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, std::vector<Livro*>& livros){
@@ -164,7 +204,7 @@ class Adm : public Usuario{
                             std::cout << "\nUsuário encontrado\n";
                             found = true;
                             usuario->exibirDados(livros);
-                            opcaoDeletar(usuarios, adms, usuario->getId());
+                            opcaoAdmUsuario(usuarios, adms, usuario->getId());
                             break;
                         }
                     }
@@ -175,7 +215,7 @@ class Adm : public Usuario{
                             std::cout << "\nUsuário encontrado\n";
                             found = true;
                             adm->exibirDados(livros);
-                            opcaoDeletar(usuarios, adms, adm->getId());
+                            opcaoAdmUsuario(usuarios, adms, adm->getId());
                             break;
                         }
                     }
@@ -193,13 +233,24 @@ class Adm : public Usuario{
             }     
         }
 
-        void opcaoDeletar(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, int id){
-            int opcao;
-            std::cout << "\nDeseja deletar o usuário?\n1 - Deletar\n0 - Sair\nSua opcao: ";
-            std::cin >> opcao;
+        void opcaoAdmUsuario(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, int id){
+            while (true) {
+                int opcao;
+                std::cout << "\n1 - Deletar\n2 - Multar\n0 - Sair\nSua opcao: ";
+                std::cin >> opcao;
 
-            if(opcao == 1){
-                // deleteUser(usuarios, adms, id);
+                if(opcao == 0){
+                    break;
+                }
+			    else if(opcao == 1){
+				    deleteUser(usuarios, adms);
+			    }
+			    else if(opcao == 2){
+				    //multar(usuarios, adms, id
+			    }
+			    else{
+				    std::cout << "\nOpção inválida\n";
+			    }
             }
         }
 

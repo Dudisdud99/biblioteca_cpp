@@ -8,12 +8,13 @@
 
 class Usuario {
     public:
-        Usuario(std::string _login, std::string _senha, int _id){
+        Usuario(std::string _login, std::string _senha, int _id, int _tipo){
             login = _login;
             senha = _senha;
             id = _id;
             multa = 0;
             status = true;
+            tipo = _tipo;
         };
         
         ~Usuario(){
@@ -27,6 +28,10 @@ class Usuario {
             senha = _senha;
             login = _login;
         }
+
+        int getTipo(){
+			return tipo;
+		}
 
         float getMulta(){
             return multa;
@@ -60,9 +65,9 @@ class Usuario {
                 std::cout << "\nLivros emprestados: " << std::endl;
                 for(Emprestimo* emprestimo : emprestimos){
                     int id = emprestimo->getIdLivro();
-                    std::cout << "\nLivro: " << livros[id]->getTitulo() << "\nID: " << id+1 << std::endl;
-                    std::cout << "Data de empréstimo: " << emprestimo->mostrarDataEmprestimo();
-                    std::cout << "Data de devolução: " << emprestimo->mostrarDataDevolucao();
+                    std::cout << "\n" << livros[id]->getTitulo() << ", ID: " << id + 1 << std::endl;
+                    std::cout << "Data de emprestimo: " << emprestimo->mostrarDataEmprestimo();
+                    std::cout << "Data de devolucao: " << emprestimo->mostrarDataDevolucao();
                     if(livros[id]->getStatus()){
                         std::cout << "!!Devolvido!!\n";
                     }
@@ -91,9 +96,10 @@ class Usuario {
         void devolverLivro(std::vector<Livro*>& livros){
             int op;
             bool devolvido = false;
+            std::cout << "\nLivros emprestados: \n";
             for(Emprestimo* emprestimo : emprestimos){
                 int id = emprestimo->getIdLivro();
-                std::cout << "\nLivro: " << livros[id]->getTitulo() << "\nID: " << id+1 << std::endl;
+                std::cout << livros[id]->getTitulo() << ", ID: " << id+1 << std::endl;
             }
             std::cout << "\nDigite o ID de um livro para devolver: ";
             std::cin >> op;
@@ -105,7 +111,7 @@ class Usuario {
                 }
             }
             if(devolvido==false){
-                std::cout << "\nID inválido\n";
+                std::cout << "\nID invalido\n";
             }
             return;
         }
@@ -142,11 +148,11 @@ class Usuario {
             return id;
         }
 
-        int opcoesUsuario(std::vector<Livro*>& livros) {
+        void opcoesUsuario(std::vector<Livro*>& livros, std::vector<Usuario*>& usuarios) {
             int opcao;
 
             while (true){
-                std::cout << "\n1 - Emprestar livro\n2 - Devolver livro\n3 - Pagar multa\n4 - Exibir dados\n0 - Sair\nSua opção: ";
+                std::cout << "\n1 - Emprestar livro\n2 - Devolver livro\n3 - Pagar multa\n4 - Exibir dados\n0 - Sair\nSua opçao: ";
                 std::cin >> opcao;
 
                 if (opcao == 1) {
@@ -155,41 +161,37 @@ class Usuario {
                     devolverLivro(livros);
                 } else if (opcao == 3) {
                     pagarMulta();
-                } else if(opcao == 4) {
+                } else if (opcao == 4) {
                     exibirDados(livros);
+                } else if (opcao == 5) {
+                    autoDeletar(usuarios);
                 } else if (opcao == 0) {
                     break;
-                } else {
-                    std::cout << "\nOpção inválida\n";
+                }
+                else {
+                    std::cout << "\nOpção invalida\n";
                 }
             }
-            return 0;
         }
 
-        // void deleteUser(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, int id){
-            // bool achou = false;
-
-            // for (Usuario* usuario : usuarios) {
-            //     if (usuario->getId() == id-1) {
-            //         achou = true;
-            //         break;
-            //     }
-            // }
-
-            // if(achou == false){
-            //     for (Adm* adm : adms) {
-            //         if (adm->getLogin() == login) {
-            //             break;
-            //         }
-            //     }
-            // }
-        // }
+        void autoDeletar(std::vector<Usuario*>& usuarios) {
+            for (auto it = usuarios.begin(); it != usuarios.end(); ) {
+                if (*it == this) {
+                    it = usuarios.erase(it);
+                    delete this;
+                    break;
+                }
+                else {
+                    ++it;
+                }
+            }
+        }
 
     private:
         std::string senha, login;
         float multa;
         bool status;
         std::vector<Emprestimo*> emprestimos;
-        int id;
+        int id, tipo;
 };
 #endif

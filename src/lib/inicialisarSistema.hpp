@@ -14,12 +14,12 @@ void inicio(std::vector<Usuario*>& usuarios, std::vector<Livro*>& livros, std::v
 
     std::cout << "\nBem-vindo ao sistema de biblioteca\n";
 
-    do {
+    while (true) {
         std::cout << "\n1 - Cadastro\n2 - Login\n0 - Sair\nSua opcao: ";
         std::cin >> opcao;
 
         if (opcao == 0) {
-            return;
+            break;
         }
         else if (opcao == 1) {
             cadastro(usuarios, livros, adms, idUsuario, senhaAdm);
@@ -30,6 +30,6 @@ void inicio(std::vector<Usuario*>& usuarios, std::vector<Livro*>& livros, std::v
         else {
             std::cout << "\nOpcao invalida\n";
         }
-    } while (opcao != 0);
+    }
 }
 #endif

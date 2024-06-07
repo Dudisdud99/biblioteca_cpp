@@ -41,18 +41,24 @@ int main() {
     iniciarMultas(usuarios);
     inicio(usuarios, livros, adms, idUsuario, senhaAdm);
 
-    for (Usuario* usuario : usuarios) {
-        delete usuario;
+    for (auto it = usuarios.begin(); it != usuarios.end(); ) {
+        delete* it;
+        *it = nullptr;
+        it = usuarios.erase(it);
     }
     usuarios.clear();
 
-    for (Livro* livro : livros) {
-        delete livro;
+    for (auto it = livros.begin(); it != livros.end(); ) {
+        delete* it;
+        *it = nullptr;
+        it = livros.erase(it);
     }
     livros.clear();
 
-    for (Adm* adm : adms) {
-        delete adm;
+    for (auto it = adms.begin(); it != adms.end(); ) {
+        delete* it;
+        *it = nullptr;
+        it = adms.erase(it);
     }
     adms.clear();
 

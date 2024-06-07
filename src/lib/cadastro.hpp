@@ -39,7 +39,7 @@ void cadastro(std::vector<Usuario*>& usuarios, std::vector<Livro*>& livros, std:
     }
 
     while (true) {
-        std::cout << "\nDigite a senha: ";
+        std::cout << "Digite a senha: ";
         std::cin >> senha;
 
         if (senha == senhaAdm) {
@@ -51,7 +51,7 @@ void cadastro(std::vector<Usuario*>& usuarios, std::vector<Livro*>& livros, std:
     }
 
     while (true) {
-        std::cout << "Voce esta cadastrando um administrador ou usuario (1 - Admin, 2 - Usuario)";
+        std::cout << "\nVoce esta cadastrando um administrador ou usuario (1 - Admin, 2 - Usuario): ";
         int opcao;
 		std::cin >> opcao;
 		if(opcao == 1){
@@ -62,7 +62,8 @@ void cadastro(std::vector<Usuario*>& usuarios, std::vector<Livro*>& livros, std:
                 std::cout << "Digite o codigo de verificacao: ";
                 std::cin >> codigo;
                 if (codigo == senhaAdm){
-                    Adm* adm = new Adm(nomeUsuario, senha, idUsuario);
+                    int tipo = 1;
+                    Adm* adm = new Adm(nomeUsuario, senha, idUsuario, tipo);
                     adms.push_back(adm);
                     std::cout << "\nAdministrador cadastrado com sucesso!!!\n";
                     existeAdm = true;
@@ -81,7 +82,8 @@ void cadastro(std::vector<Usuario*>& usuarios, std::vector<Livro*>& livros, std:
 
 		}
 		else if(opcao == 2){
-			Usuario* usuario = new Usuario(nomeUsuario, senha, idUsuario);
+            int tipo = 2;
+			Usuario* usuario = new Usuario(nomeUsuario, senha, idUsuario, tipo);
 			usuarios.push_back(usuario);
 			std::cout << "\nUsuario cadastrado com sucesso!!!\n";
 			break;

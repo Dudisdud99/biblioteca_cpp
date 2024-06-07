@@ -19,21 +19,19 @@ void login(std::vector<Usuario*>& usuarios, std::vector<Livro*>& livros, std::ve
 
         bool found = false;
 
-        if (senha == senhaAdm) {
-            for (Adm* adm : adms) {
-                if (adm->getLogin() == login) {
-                    std::cout << "\nAdiminstrador logado\n";
-                    adm->opcoesUsuario(livros, usuarios, adms, idUsuario, senhaAdm);
-                    found = true;
-                    break;
-                }
+        for (Adm* adm : adms) {
+            if (adm->getLogin() == login && adm->getSenha() == senha) {
+                std::cout << "\nAdiminstrador logado\n";
+                adm->opcoesUsuario(livros, usuarios, adms, idUsuario, senhaAdm);
+                found = true;
+                break;
             }
         }
-        else {
+        if (!found) {
             for (Usuario* usuario : usuarios) {
                 if (usuario->getLogin() == login && usuario->getSenha() == senha) {
                     std::cout << "\nUsuario logado\n";
-                    usuario->opcoesUsuario(livros);
+                    usuario->opcoesUsuario(livros, usuarios);
                     found = true;
                     break;
                 }
