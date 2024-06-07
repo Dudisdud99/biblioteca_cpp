@@ -22,13 +22,20 @@
     <ClInclude Include="src\lib\adm.hpp" />
     <ClInclude Include="src\lib\cadastro.hpp" />
     <ClInclude Include="src\lib\emprestimo.hpp" />
-    <ClInclude Include="src\lib\inicialisarSistema.hpp" />
+    <ClInclude Include="src\lib\inicio.hpp" />
     <ClInclude Include="src\lib\livro.hpp" />
     <ClInclude Include="src\lib\login.hpp" />
     <ClInclude Include="src\lib\usuario.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\adm.cpp" />
+    <ClCompile Include="src\cadastro.cpp" />
+    <ClCompile Include="src\emprestimo.cpp" />
+    <ClCompile Include="src\inicio.cpp" />
+    <ClCompile Include="src\livro.cpp" />
+    <ClCompile Include="src\login.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\usuario.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

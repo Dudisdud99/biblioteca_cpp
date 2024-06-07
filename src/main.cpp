@@ -6,27 +6,27 @@
 #include "lib/livro.hpp"
 #include "lib/cadastro.hpp"
 #include "lib/login.hpp"
-#include "lib/inicialisarSistema.hpp"
+#include "lib/inicio.hpp"
 
-// inicialização de adicionais
+//inicializacao de testes
 
 void iniciarMultas(std::vector<Usuario*>& usuarios) {
     for (Usuario* usuario : usuarios) {
-        usuario->calcMulta();
+        //usuario->calcMulta();
     }
 }
 
-void inicializarLivros(std::vector<Livro*>& livros){
-    for (int i = 0; i < 10; i++) {
-        Livro* livro = new Livro();
-        livro->setTitulo("Livro " + std::to_string(i+1));
-        livro->setAutor("Autor " + std::to_string(i+1));
-        livro->setAno(2000 + i+1);
-        livro->setGenero("Genero " + std::to_string(i+1));
-        livro->setId(i);
-        livros.push_back(livro);
-    }
-}
+//void inicializarLivros(std::vector<Livro*>& livros) {
+//    for (int i = 0; i < 10; i++) {
+//        Livro* livro = new Livro();
+//        livro->setTitulo("Livro " + std::to_string(i + 1));
+//        livro->setAutor("Autor " + std::to_string(i + 1));
+//        livro->setAno(2000 + i + 1);
+//        livro->setGenero("Genero " + std::to_string(i + 1));
+//        livro->setId(i);
+//        livros.push_back(livro);
+//    }
+//}
 
 int main() {
     std::vector<Usuario*> usuarios;
@@ -37,8 +37,8 @@ int main() {
 
     int idUsuario = 0;
 
-    inicializarLivros(livros);
-    iniciarMultas(usuarios);
+    //inicializarLivros(livros);
+    //iniciarMultas(usuarios);
     inicio(usuarios, livros, adms, idUsuario, senhaAdm);
 
     for (auto it = usuarios.begin(); it != usuarios.end(); ) {

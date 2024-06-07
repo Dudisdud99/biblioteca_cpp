@@ -1,15 +1,8 @@
-#ifndef INICIALIZARSISTEMA_HPP
-#define INICIALIZARSISTEMA_HPP
-#include <iostream>
-#include <string>
-#include <vector>
-#include "usuario.hpp"
-#include "livro.hpp"
-#include "adm.hpp"
-#include "cadastro.hpp"
-#include "login.hpp"
+#include "lib/inicio.hpp"
+#include "lib/cadastro.hpp"
+#include "lib/login.hpp"
 
-void inicio(std::vector<Usuario*>& usuarios, std::vector<Livro*>& livros, std::vector<Adm*>& adms, int& idUsuario, std::string senhaAdm) {
+void Inicio::inicio(std::vector<Usuario*>& usuarios, std::vector<Livro*>& livros, std::vector<Adm*>& adms, int& idUsuario, std::string senhaAdm) {
     int opcao;
 
     std::cout << "\nBem-vindo ao sistema de biblioteca\n";
@@ -32,4 +25,3 @@ void inicio(std::vector<Usuario*>& usuarios, std::vector<Livro*>& livros, std::v
         }
     }
 }
-#endif
