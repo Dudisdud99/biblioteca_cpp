@@ -15,10 +15,11 @@ void Inicio::inicio(std::vector<Usuario*>& usuarios, std::vector<Livro*>& livros
             break;
         }
         else if (opcao == 1) {
-            cadastro(usuarios, livros, adms, idUsuario, senhaAdm);
+            Cadastro::cadastro(usuarios, livros, adms, idUsuario, senhaAdm);
+            Login::login(usuarios, livros, adms, idUsuario, senhaAdm);
         }
         else if (opcao == 2) {
-            login(usuarios, livros, adms, idUsuario, senhaAdm);
+            Login::login(usuarios, livros, adms, idUsuario, senhaAdm);
         }
         else {
             std::cout << "\nOpcao invalida\n";

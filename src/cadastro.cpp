@@ -90,5 +90,4 @@ void Cadastro::cadastro(std::vector<Usuario*>& usuarios, std::vector<Livro*>& li
     }
     idUsuario += 1;
 
-    login(usuarios, livros, adms, idUsuario, senhaAdm);
 }

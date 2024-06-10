@@ -9,7 +9,9 @@ class Livro;
 class Emprestimo;
 
 class Usuario {
+
     public:
+
         Usuario(std::string _login, std::string _senha, int _id, int _tipo);
 
         ~Usuario();
@@ -53,6 +55,7 @@ class Usuario {
         void autoDeletar(std::vector<Usuario*>& usuarios);
 
     private:
+
         std::string senha, login;
         float multa;
         bool status;
