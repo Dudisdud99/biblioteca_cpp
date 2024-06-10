@@ -10,6 +10,7 @@ void Login::login(std::vector<Usuario*>& usuarios, std::vector<Livro*>& livros, 
     std::string login, senha;
 
     while (true) {
+        std::cout << "\n---------------------------\n";
         std::cout << "\nDigite o nome de usuario: ";
         std::cin >> login;
 

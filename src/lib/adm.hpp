@@ -26,7 +26,7 @@ class Adm : public Usuario {
 
         void opcoesAdm(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, int idUsuari, std::string senhaAdm, std::vector<Livro*>& livros);
 
-        void deleteUser(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms);
+        void deleteUser(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, int idUser);
 
         void autoDeletar(std::vector<Adm*>& adms);
 
@@ -42,9 +42,9 @@ class Adm : public Usuario {
 
         void verificarUser(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, std::vector<Livro*>& livros);
 
-        void opcaoAdmUsuario(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, int id);
+        void opcaoAdmUsuario(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, int idUser);
 
-        void multar(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, int id);
+        void multar(std::vector<Usuario*>& usuarios, std::vector<Adm*>& adms, int idUser);
 };
 
 #endif

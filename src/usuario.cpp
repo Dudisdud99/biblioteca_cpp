@@ -55,6 +55,7 @@ void Usuario::setStatus(bool _status) {
 }
 
 void Usuario::exibirDados(std::vector<Livro*>& livros) {
+    std::cout << "\n---------------------------\n";
     std::cout << "\nLogin: " << login << std::endl;
     std::cout << "Multa: " << multa << std::endl;
 
@@ -70,6 +71,7 @@ void Usuario::exibirDados(std::vector<Livro*>& livros) {
             }
         }
     }
+    std::cout << "\n";
 }
 
 void Usuario::emprestarLivro(std::vector<Livro*>& livros) {
@@ -93,7 +95,8 @@ void Usuario::calcMulta() {
 void Usuario::devolverLivro(std::vector<Livro*>& livros) {
     int op;
     bool devolvido = false;
-    std::cout << "\nLivros emprestados: \n";
+    std::cout << "\n---------------------------\n";
+    std::cout << "\nLivros emprestados: \n\n";
     for (Emprestimo* emprestimo : emprestimos) {
         int id = emprestimo->getIdLivro();
         std::cout << livros[id]->getTitulo() << ", ID: " << id + 1 << std::endl;
@@ -126,7 +129,8 @@ void Usuario::pagarMulta() {
 
 int Usuario::livrosDisponiveis(std::vector<Livro*>& livros) {
     int nLivro;
-    std::cout << "\nEscolha um livro e digite seu ID\n";
+    std::cout << "\n---------------------------\n";
+    std::cout << "\nEscolha um livro e digite seu ID\n\n";
     for (int i = 0; i < livros.size(); i++) {
         Livro* livro = livros[i];
         bool status = livros[i]->getStatus();
@@ -149,7 +153,8 @@ void Usuario::opcoesUsuario(std::vector<Livro*>& livros, std::vector<Usuario*>& 
     int opcao;
 
     while (true) {
-        std::cout << "\n1 - Emprestar livro\n2 - Devolver livro\n3 - Pagar multa\n4 - Exibir dados\n0 - Sair\nSua opçao: ";
+        std::cout << "\n---------------------------\n";
+        std::cout << "\n1 - Emprestar livro\n2 - Devolver livro\n3 - Pagar multa\n4 - Exibir dados\n0 - Sair\n\nSua opçao: ";
         std::cin >> opcao;
 
         if (opcao == 1) {

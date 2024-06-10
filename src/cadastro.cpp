@@ -7,6 +7,7 @@
 void Cadastro::cadastro(std::vector<Usuario*>& usuarios, std::vector<Livro*>& livros, std::vector<Adm*>& adms, int& idUsuario, std::string senhaAdm) {
     std::string nomeUsuario, senha;
     while (true) {
+        std::cout << "\n---------------------------\n";
         std::cout << "\nDigite o nome de usuario: ";
         std::cin >> nomeUsuario;
 
